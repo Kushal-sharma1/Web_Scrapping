@@ -1,25 +1,31 @@
 
 const cheerio = require("cheerio");
 const request = require("request");
-
+const {gifs} =require("./scorecard");
+function matched(url){
 request(url,cb);
+}
 
 function cb( err, res , body){
  if(err){
      console.log("error "+err);
  }else{
-     handleHtml(body);
+     collectmatch(body);
  }
     
 }
 
-function handleHtml(body){
+function collectmatch(body){
 
     let selectool = cheerio.load(body);
-    let anchor = selectool('a[data-hover="View All Results"]');
-    // console.log(anchor.html());
-    let relativelink =anchor.attr("href");
-    // console.log(relativelink);   
+    let scorecardele = selectool('a[data-hover="Scorecard"]');
+    for(let i=0;i<scorecardele.length;i++){
+    let relativelink =selectool(scorecardele[i]).attr("href");
     let drivelink="https://www.espncricinfo.com"+relativelink;
-    console.log(drivelink);   
+     gifs(drivelink);
+    }
+}
+
+module.exports={
+    matched:matched
 }

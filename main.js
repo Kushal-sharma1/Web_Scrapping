@@ -1,6 +1,7 @@
 let url="https://www.espncricinfo.com/series/ipl-2020-21-1210595";
 const cheerio = require("cheerio");
 const request = require("request");
+const matcher =require("./allmatched");
 
 request(url,cb);
 
@@ -21,5 +22,6 @@ function handleHtml(body){
     let relativelink =anchor.attr("href");
     // console.log(relativelink);   
     let drivelink="https://www.espncricinfo.com"+relativelink;
-    console.log(drivelink);   
+    console.log(drivelink); 
+    matcher.matched(drivelink);  
 }
